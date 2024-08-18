@@ -17,20 +17,38 @@ class PerguntaApp extends StatefulWidget {
 
 class _PerguntaAppState extends State<PerguntaApp> {
   var _perguntaSelecionada = 0;
+  final _perguntas = const [
+    {
+      'texto': 'Qual é sua cor favorita?',
+      'respostas': ['Preto', 'Vermelho', 'Verde', 'Branco']
+    },
+    {
+      'texto': 'Qual é seu animal favorito?',
+      'respostas': ['Coelho', 'Cobra', 'Elefante', 'Leão']
+    },
+    {
+      'texto': 'Qual seu instrutor favorito?',
+      'respostas': ['Maria', 'João', 'Léo', 'Pedro']
+    }
+  ];
 
   void _responder() {
-    setState(() {
-      _perguntaSelecionada++;
-    });
-    print(_perguntaSelecionada);
+    if (temPerguntaSelecionada) {
+      setState(() {
+        _perguntaSelecionada++;
+      });
+    }
+  }
+
+  bool get temPerguntaSelecionada {
+    return _perguntaSelecionada < _perguntas.length;
   }
 
   @override
   Widget build(BuildContext context) {
-    final perguntas = [
-      'Qual a sua cor favorita?',
-      'Qual é o seu animal favorito?',
-    ];
+    List<String> respostas = temPerguntaSelecionada
+        ? _perguntas[_perguntaSelecionada]['respostas'] as List<String>
+        : [];
 
     return MaterialApp(
       home: Scaffold(
@@ -38,14 +56,19 @@ class _PerguntaAppState extends State<PerguntaApp> {
           title: Text('Perguntas'),
           centerTitle: true,
         ),
-        body: Column(
-          children: <Widget>[
-            Questao(perguntas[_perguntaSelecionada]),
-            Resposta('Resposta 1', _responder),
-            Resposta('Resposta 2', _responder),
-            Resposta('Resposta 3', _responder),
-          ],
-        ),
+        body: temPerguntaSelecionada
+            ? Column(
+                children: <Widget>[
+                  Questao(_perguntas[_perguntaSelecionada]['texto'] as String),
+                  ...respostas.map((t) => Resposta(t, _responder)),
+                ],
+              )
+            : Center(
+                child: Text(
+                  style: TextStyle(fontSize: 28),
+                  'Parabéns',
+                ),
+              ),
       ),
     );
   }
