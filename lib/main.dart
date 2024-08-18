@@ -37,16 +37,16 @@ class _PerguntaAppState extends State<PerguntaApp> {
           children: <Widget>[
             Text(perguntas[_perguntaSelecionada]),
             ElevatedButton(
+              onPressed: _responder,
               child: Text('Resposta 1'),
-              onPressed: _responder,
             ),
             ElevatedButton(
+              onPressed: _responder,
               child: Text('Resposta 2'),
-              onPressed: _responder,
             ),
             ElevatedButton(
-              child: Text('Resposta 3'),
               onPressed: _responder,
+              child: Text('Resposta 3'),
             ),
           ],
         ),
