@@ -1,12 +1,16 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:projeto_perguntas/questao.dart';
+import 'package:projeto_perguntas/resposta.dart';
 
 main() {
   runApp(PerguntaApp());
 }
 
 class PerguntaApp extends StatefulWidget {
+  const PerguntaApp({super.key});
+
   @override
   State<PerguntaApp> createState() => _PerguntaAppState();
 }
@@ -32,22 +36,14 @@ class _PerguntaAppState extends State<PerguntaApp> {
       home: Scaffold(
         appBar: AppBar(
           title: Text('Perguntas'),
+          centerTitle: true,
         ),
         body: Column(
           children: <Widget>[
-            Text(perguntas[_perguntaSelecionada]),
-            ElevatedButton(
-              onPressed: _responder,
-              child: Text('Resposta 1'),
-            ),
-            ElevatedButton(
-              onPressed: _responder,
-              child: Text('Resposta 2'),
-            ),
-            ElevatedButton(
-              onPressed: _responder,
-              child: Text('Resposta 3'),
-            ),
+            Questao(perguntas[_perguntaSelecionada]),
+            Resposta('Resposta 1', _responder),
+            Resposta('Resposta 2', _responder),
+            Resposta('Resposta 3', _responder),
           ],
         ),
       ),
